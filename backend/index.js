@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+//Sinaliza para o express que estamos usando JSON no body das requisiçoes
+app.use(express.json());
+
 app.get("/", function (req, res) {
     res.send("Hello, World!");
 });
@@ -29,10 +32,22 @@ const lista = [
 ];
 //Endpoint READ ALL - [GET] /pontuacoes
 app.get("/pontuacoes", function (req, res){
-    res.send("Ler todas as pontuações");
+    res.send(lista);
 });
+
 //Endpoint CREATE - [POST] /pontuacoes
-//Endpoint CREATE - [POST] /pontuacoes
+app.post("/pontuacoes", function(req, res){
+    const item = req.body;
+    //console.log(item);
+
+    //adicionar item na lista
+    lista.push({
+        id: lista.length + 1,
+        nome: item.nome,
+        pontos: item.pontos,
+    })
+
+    res.send("Criar uma pontuação")
+});
 
 app.listen(3000);
-//console.log("Executando no sevidor localhost:3000");
